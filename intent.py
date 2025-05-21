@@ -6,83 +6,114 @@ import re
 SMALLTALK_PATTERNS = {
     "greeting": [
         # Português
-        r"\b(oi|ol[áa]|opa|eai|fala|bom dia|boa tarde|boa noite)\b",
+        r"\b(oi|ol[áa]|opa|eai|fala|bom dia|boa tarde|boa noite|saudações)\b",
         # Inglês
-        r"\b(hello|hi|hey)\b",
+        r"\b(hello|hi|hey|good morning|good afternoon|good evening)\b",
         # Espanhol
-        r"\b(hola)\b"
+        r"\b(hola|buenos días|buenas tardes|buenas noches)\b"
     ],
     "thanks": [
         # Português
-        r"\b(obrigad[oa]|valeu|brigad[oa])\b",
+        r"\b(obrigad[oa]|valeu|brigad[oa]|agradecido|obrigadíssimo)\b",
         # Inglês
-        r"\b(thank you|thanks)\b",
+        r"\b(thank you|thanks|appreciate|much obliged)\b",
         # Espanhol
-        r"\b(gracias)\b"
+        r"\b(gracias|muchas gracias|te lo agradezco)\b"
     ],
     "bye": [
         # Português
-        r"\b(tchau|até mais|até logo)\b",
+        r"\b(tchau|até mais|até logo|falou|falou e até)\b",
         # Inglês
-        r"\b(bye|goodbye)\b",
+        r"\b(bye|goodbye|see you|see ya)\b",
         # Espanhol
-        r"\b(adiós|adios)\b"
+        r"\b(adiós|adios|hasta luego|nos vemos)\b"
     ]
 }
 
-# → Padrões de intenções funcional (tudo em PT, mas se quiser adicionar EN/ES, inclua sinônimos)
+# → Padrões de intenções funcionais (rota, faq_passageiro, relatorio)
 FUNCTIONAL_PATTERNS = {
     "rota": [
+        # Português
         r"\brota\b",
         r"\bcomo chegar\b",
         r"\bcaminho\b",
         r"\bir até\b",
-        # Expressões em inglês/espanhol 
+        r"\bdireção\b",
+        r"\bchegar em\b",
+        r"\bcomo vou\b",
+        # Inglês
         r"\broute\b",
+        r"\bdirections\b",
         r"\bget to\b",
-        r"\bcomogetagallego/??"  # se quiser suportar “¿Cómo…” em espanhol
+        r"\bhow to go\b",
+        r"\bway to\b",
+        # Espanhol
+        r"\bruta\b",
+        r"\bllegar a\b",
+        r"\bcómo llegar\b",
+        r"\bcómo voy\b"
     ],
     "faq_passageiro": [
+        # Português
         r"\bfaq\b",
         r"\binformação\b",
-        r"\bduvida\b",
+        r"\bduvid[ao]\b",
         r"\bpergunta\b",
+        r"\bpreciso saber\b",
+        r"\bcomo faço\b",
+        r"\bcomo funciona\b",
+        r"\bonde posso\b",
         # Inglês
-        r"\bquestion\b",
+        r"\b(question|questions)\b",
         r"\binfo\b",
+        r"\bhow do i\b",
+        r"\bwhere can i\b",
+        r"\bcan i\b",
+        r"\bcan we\b",
+        r"\bhelp me\b",
         # Espanhol
         r"\bduda\b",
-        r"\bpregunta\b"
+        r"\bpregunta\b",
+        r"\bcómo puedo\b",
+        r"\bdónde puedo\b"
     ],
     "relatorio": [
+        # Português
         r"\brelatório\b",
         r"\bdados\b",
         r"\bestatística\b",
+        r"\bmétricas\b",
+        r"\binforme\b",
         # Inglês
         r"\breport\b",
         r"\bstatistics\b",
+        r"\bdata\b",
+        r"\bmetrics\b",
+        r"\bgenerate report\b",
         # Espanhol
         r"\binforme\b",
-        r"\bestadísticas\b"
+        r"\bestadísticas\b",
+        r"\bdatos\b",
+        r"\bmetrics\b"
     ]
 }
+
 
 def detect_intent(user_input: str) -> str:
     """
     Retorna uma das seguintes strings:
     - "greeting", "thanks", "bye"
     - "rota", "faq_passageiro", "relatorio"
-    - "fallback" (quando não achar nenhum padrão)
+    - "fallback" (quando não encontrar nenhum padrão)
     """
 
     text = user_input.lower()
 
-    # 1) Verifica SMALLTALK (saudação, agradecimento, despedida)
+    # 1) Verifica SMALLTALK (saudações, agradecimentos, despedidas)
     for intent, patterns in SMALLTALK_PATTERNS.items():
         for pat in patterns:
             if re.search(pat, text, re.IGNORECASE):
-                # Retorna logo no primeiro match
-                return intent
+                return intent  # "greeting", "thanks" ou "bye"
 
     # 2) Verifica INTENÇÕES FUNCIONAIS (rota, faq_passageiro, relatorio)
     for intent, patterns in FUNCTIONAL_PATTERNS.items():
@@ -90,5 +121,5 @@ def detect_intent(user_input: str) -> str:
             if re.search(pat, text, re.IGNORECASE):
                 return intent
 
-    # 3) Se nada bateu, fallback
+    # 3) Se nada bateu, retorna “fallback”
     return "fallback"
