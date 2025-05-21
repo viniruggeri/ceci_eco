@@ -1,5 +1,4 @@
 # pipeline.py
-
 import re
 from datetime import datetime
 from langdetect import detect
@@ -73,14 +72,16 @@ async def process_user_input(user_input: str):
 
     intent = detect_intent(user_input)
     fn = INTENT_FUNCS.get(intent)
-
+    
+    if intent == "rota":
+        texto_rota = fn(user_input)
+        yield texto_rota
+        return
     if fn:
         resultado = fn(user_input)
 
         if intent == "faq_passageiro":
             context_obj = {"tipo": "faq", "texto_faq": resultado}
-        elif intent == "rota":
-            context_obj = {"tipo": "rota", "texto_rota": resultado}
         elif intent == "relatorio":
             agora = datetime.now().strftime("%d/%m/%Y %H:%M")
             context_obj = {
