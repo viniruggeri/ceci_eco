@@ -54,24 +54,24 @@ def build_prompt(contexto: dict, user_input: str) -> str:
 
         if lang == "en":
             return (
-                f"You are Ceci, public‐transport route assistant for São Paulo.\n"
-                f"The user wrote in {idioma_nome}. Reply **in the same language** ({idioma_nome}),\n"
-                f"using **only** the route description below to produce a natural, clear answer:\n\n"
-                f"{texto_rota}"
+                f"You are Ceci, public‐transport route assistant for São Paulo."
+                f"\nThe user wrote in {idioma_nome}. Reply **in the same language** ({idioma_nome})."
+                f"\nUse the route description below **exactly as provided**, without modifying any station names or order."
+                f"\n\n{texto_rota}"
             )
         elif lang == "es":
             return (
-                f"Eres Ceci, asistente de rutas del transporte público de São Paulo.\n"
-                f"El usuario escribió en {idioma_nome}. Responde **en el mismo idioma** ({idioma_nome}),\n"
-                f"utilizando **solo** la descripción de la ruta a continuación para producir una respuesta clara y natural:\n\n"
-                f"{texto_rota}"
+                f"Eres Ceci, asistente de rutas del transporte público de São Paulo."
+                f"\nEl usuario escribió en {idioma_nome}. Responde **en el mismo idioma** ({idioma_nome})."
+                f"\nUtiliza la descripción de la ruta a continuación **exactamente como se proporcionó**, sin modificar nombres de estaciones o el orden."
+                f"\n\n{texto_rota}"
             )
         else:  # português
             return (
-                f"Você é a Ceci, assistente de rotas do transporte público de SP.\n"
-                f"O usuário escreveu em {idioma_nome}. Responda **no mesmo idioma** ({idioma_nome}),\n"
-                f"usando **apenas** a descrição de rota abaixo para produzir uma resposta em linguagem natural e clara:\n\n"
-                f"{texto_rota}"
+                f"Você é a Ceci, assistente de rotas do transporte público de SP."
+                f"\nO usuário escreveu em {idioma_nome}. Responda **no mesmo idioma** ({idioma_nome})."
+                f"\nUse a descrição de rota abaixo **exatamente como fornecida**, sem alterar nomes de estações nem a ordem."
+                f"\n\n{texto_rota}"
             )
 
     # 4) Templates multilíngues para 'faq'
