@@ -34,13 +34,16 @@ SMALLTALK_PATTERNS = {
 FUNCTIONAL_PATTERNS = {
     "rota": [
         # Português
-        r"\brota\b",
         r"\bcomo chegar\b",
         r"\bcaminho\b",
         r"\bir até\b",
         r"\bdireção\b",
         r"\bchegar em\b",
-        r"\bcomo vou\b",
+        r"\bcomo vou\b",
+        r"\bcomo eu vou\b",
+        r"\bcomo eu faço\b",
+        r"\bcomo eu chego\b",
+        r"\bquero ir\b",
         # Inglês
         r"\broute\b",
         r"\bdirections\b",
