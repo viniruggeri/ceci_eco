@@ -75,5 +75,4 @@ def nlp_pipeline(user_input: str) -> dict:
 
     origem  = pair["origem"]
     destino = pair["destino"]
-    modos   = ["rapido", "simples", "acessivel"]
-    return {"origem": origem, "destino": destino, "modos_de_transporte": modos}
+    return {"origem": origem, "destino": destino}
